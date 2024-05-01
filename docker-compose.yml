@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  api:
+    image: 443545817539.dkr.ecr.us-east-1.amazonaws.com/carlossanjuan.messaging.api:latest
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    env_file:
+      - .env
+    environment:
+      VIRTUAL_HOST: messaging.carlossanjuan.co
+      VIRTUAL_PORT: 8000
+      LETSENCRYPT_HOST: messaging.carlossanjuan.co
+      LETSENCRYPT_EMAIL: contacto@carlossanjuan.co
+      DATABASE_URI: ${DATABASE_URI}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
